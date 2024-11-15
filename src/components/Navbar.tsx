@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Scissors, Menu, X } from 'lucide-react'; // Agregar iconos de hamburguesa y cerrar
+import { Scissors, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('');
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para controlar el menú
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -28,10 +28,15 @@ const Navbar = () => {
     }
   }, [location]);
 
+  // Nuevo useEffect para hacer scroll al inicio cuando cambias de ruta
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -53,19 +58,16 @@ const Navbar = () => {
           <Scissors className="h-6 w-6 text-purple-400" />
           <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Mj Perruquers
-
           </h1>
         </Link>
 
-        {/* Icono de hamburguesa en pantallas pequeñas */}
-        <button 
+        <button
           className="lg:hidden text-gray-300"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
 
-        {/* Navegación en pantallas grandes y cuando el menú está abierto */}
         <nav className={`flex lg:flex space-x-8 ${isMenuOpen ? 'flex-col absolute top-16 left-0 w-full bg-gray-800 border-t border-gray-700 p-4' : 'hidden lg:flex'}`}>
           {navLinks.map(({ path, label }) => (
             <Link
