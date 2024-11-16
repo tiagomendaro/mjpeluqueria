@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Facebook, Instagram, MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const Footer = () => {
+  const location = useLocation();
+
   return (
     <footer className="bg-gray-800 border-t border-gray-700 mt-16">
       <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
@@ -11,8 +13,7 @@ const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="block">
               <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Mj Perruquers
-
+                Mj Perruquers
               </h2>
             </Link>
             <div className="flex space-x-4">
@@ -39,16 +40,21 @@ const Footer = () => {
                   Sobre Nosotros
                 </Link>
               </li>
-              <li>
-                <a href="/#servicios" className="text-gray-400 hover:text-purple-400 transition-colors">
-                  Servicios
-                </a>
-              </li>
-              <li>
-                <a href="/#galeria" className="text-gray-400 hover:text-purple-400 transition-colors">
-                  Galería
-                </a>
-              </li>
+              {/* Solo mostrar "Servicios" y "Galería" si estamos en la página de Inicio */}
+              {location.pathname === '/' && (
+                <>
+                  <li>
+                    <a href="/#servicios" className="text-gray-400 hover:text-purple-400 transition-colors">
+                      Servicios
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/#galeria" className="text-gray-400 hover:text-purple-400 transition-colors">
+                      Galería
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
